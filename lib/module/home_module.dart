@@ -89,8 +89,8 @@ class Home extends StatelessWidget {
                         child: TabBarView(
                           children: [
                           g2("assets/images/3.png",'Sandwich',context),
-                          g("assets/images/4.png",'Tea'),
-                          g("assets/images/5.png",'Coffee'),
+                          g2("assets/images/4.png",'Tea',context),
+                          g2("assets/images/5.png",'Coffee',context),
                         //  Container(
                         //     height: 100,
                         //     width: 100,
@@ -123,7 +123,7 @@ Widget g2(String image,String title,context)=> ListView.separated(
                       padding: const EdgeInsets.symmetric(horizontal: 5,),
                       child: InkWell(
                         onTap:(){
-                          detailScreen2(context,image,title: title);
+                          detailScreen(context,image, title);
                         },
                         child: Card(
                           elevation: 5,

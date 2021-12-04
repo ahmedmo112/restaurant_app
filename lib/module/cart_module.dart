@@ -138,6 +138,7 @@ class CartScreen extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal:20,vertical: 8),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: defultColor),
                   color: Colors.white.withOpacity(0.9)
                 ),
                 child:
