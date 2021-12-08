@@ -80,9 +80,9 @@ Widget defaultFormField({
       decoration: InputDecoration(
         fillColor: Colors.white,
         filled: true,
-         // labelText: label,
+          labelText: label,
           hintText:label ,
-          //labelStyle: TextStyle(color: Colors.amber),
+          labelStyle: TextStyle(color: Colors.amber),
          // hintStyle:TextStyle(color: Colors.amber) ,
           prefixIcon: Icon(prefix, color: Colors.amber,),
           suffixIcon: suffix != null
@@ -111,7 +111,7 @@ Widget defaultFormField({
           
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
-            borderSide: BorderSide(color: Colors.white)
+            borderSide: BorderSide(color: Colors.grey.shade300)
           ),
             
           ),

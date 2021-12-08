@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mt3am/module/order_model.dart';
 import 'package:mt3am/shared/componants/components.dart';
 import 'package:mt3am/shared/styles/colors.dart';
 
@@ -177,7 +178,9 @@ class CartScreen extends StatelessWidget {
                 )
               ),
                SizedBox(height: 20,),
-               defaultButton(function: (){}, text: "Order Now"),
+               defaultButton(function: (){
+                 userInfoForOrder(context);
+               }, text: "Order Now"),
                 ],
           )
               ),
