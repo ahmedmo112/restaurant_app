@@ -1,5 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mt3am/layout/cubit/cubit.dart';
+import 'package:mt3am/layout/cubit/states.dart';
+import 'package:mt3am/model/menumodel.dart';
 import 'package:mt3am/module/cart_module.dart';
 import 'package:mt3am/shared/styles/colors.dart';
 
@@ -10,8 +14,11 @@ class Home extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return 
-       Padding(
+    return BlocConsumer<AppCubit, AppSates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        var cubit = AppCubit.get(context);
+        return cubit.menuModel != null? Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
@@ -75,9 +82,9 @@ class Home extends StatelessWidget {
                       Tab(
                         child: Text('Food',style: TextStyle(fontSize: 15)),
                       ),
-                        Tab(
-                        child: Text('Hot drinks',style: TextStyle(fontSize: 15)),
-                      ),
+                      //   Tab(
+                      //   child: Text('Hot drinks',style: TextStyle(fontSize: 15)),
+                      // ),
                         Tab(
                         child: Text('cold drinks',style: TextStyle(fontSize: 15)),
                       )
@@ -87,43 +94,42 @@ class Home extends StatelessWidget {
                       child: Container(
                       //  height: 400,
                         child: TabBarView(
-                          children: [
-                          g2("assets/images/3.png",'Sandwich',context),
-                          g2("assets/images/4.png",'Tea',context),
-                          g2("assets/images/5.png",'Coffee',context),
-                        //  Container(
-                        //     height: 100,
-                        //     width: 100,
-                        //     color: Colors.blue,
-                        //   ),
-                        //   Container(
-                        //     height: 100,
-                        //     width: 100,
-                        //     color: Colors.orange,
-                        //   ),
-                        ]),
+                          children:  
+                          
+                          [
+                          itemView2(cubit.menuModel!.food,context),
+                          // itemView2("assets/images/4.png",'Tea',context),
+                          itemView2(cubit.menuModel!.icedDrinks,context),
+                        ]
+                        ),
                       ),
                     )
           ],
           
         ),
       
+    ):Center(child: CircularProgressIndicator(),);
+      }
     );
+       
   }
 }
 
-Widget g2(String image,String title,context)=> ListView.separated(
+
+
+Widget itemView2(List model,context)=> ListView.separated(
   physics: BouncingScrollPhysics(),
-  itemCount: 10,
+  itemCount: model.length,
   separatorBuilder: (BuildContext context, int index) {
     return SizedBox(height:10);
   },
   itemBuilder: (BuildContext context, int index) {
+    var mIndex = model[index];
     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 5,),
                       child: InkWell(
                         onTap:(){
-                          detailScreen(context,image, title);
+                          detailScreen(context,mIndex);
                         },
                         child: Card(
                           elevation: 5,
@@ -143,7 +149,7 @@ Widget g2(String image,String title,context)=> ListView.separated(
                                      height: 70,
                                       decoration: BoxDecoration(
                                         image: DecorationImage(
-                                            image: AssetImage(image),
+                                            image: AssetImage(model[index].image!),
                                             fit: BoxFit.contain),
                                       )),
                                 ),
@@ -154,7 +160,7 @@ Widget g2(String image,String title,context)=> ListView.separated(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
-                                        Text("$title",style: TextStyle(fontWeight:FontWeight.bold,fontSize: 17)),
+                                        Text(model[index].name!,style: TextStyle(fontWeight:FontWeight.bold,fontSize: 17)),
                                         SizedBox(height: 5,),
                                         Container(
                                        
@@ -162,12 +168,12 @@ Widget g2(String image,String title,context)=> ListView.separated(
                                          shrinkWrap: true,
                                          scrollDirection: Axis.vertical,
                                          physics: NeverScrollableScrollPhysics(),
-                                         itemCount: 3,
+                                         itemCount: mIndex.sizeprice!.length,
                                          separatorBuilder: (BuildContext context, int index) {
                                            return SizedBox(height: 5,);
                                          },
                                          itemBuilder: (BuildContext context, int index) {
-                                           return size2(sizes[index],index);
+                                           return sizePrice2(mIndex.sizeprice![index]);
                                          },
                                        ),
                                      ),
@@ -185,7 +191,11 @@ Widget g2(String image,String title,context)=> ListView.separated(
 );
 
 
-Widget g(String image,String title)=>GridView.builder(
+
+
+
+
+Widget itemView(String image,String title)=>GridView.builder(
   padding: EdgeInsets.symmetric(vertical: 20,horizontal: 10),
  // physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
@@ -199,7 +209,7 @@ Widget g(String image,String title)=>GridView.builder(
                 itemBuilder: (BuildContext context, int index) {
                   return InkWell(
                     onTap: (){
-                      detailScreen(context,image,title);
+                      //detailScreen(context,image,title);
                     },
                     child: GridTile(
                      
@@ -276,34 +286,3 @@ Widget g(String image,String title)=>GridView.builder(
 
 
 
-              List sizes =['S','M','L'];
- List price=[20,85,99.9];
-
-Widget size2(size,index)=> 
-
-    Container(
-    height: 15,
-    padding: EdgeInsets.symmetric(horizontal: 10),
-    decoration: BoxDecoration(
-      color:Colors.grey[350]!.withOpacity(0.5),
-      borderRadius: BorderRadius.circular(7),
-    ),
-    child: Row(
-      children: [
-        Text(size , style : TextStyle(
-                                           // color:Colors.white,
-                                           fontSize: 10,
-                                          
-                                          ),),
-        Spacer(),
-        Text("\$${price[index]}",style:  TextStyle(
-                                           // color:Colors.white,
-                                           fontSize: 10,
-                                          
-                                          ),)
-        
-      ],
-    )
-    )
-// )
-;
